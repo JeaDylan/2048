@@ -4,10 +4,13 @@ import modele.Cell;
 import modele.Direction;
 import modele.Game;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
+import static com.sun.java.accessibility.util.AWTEventMonitor.addKeyListener;
 import static java.sql.Types.NULL;
 
 public class Console2048 extends Thread implements Observer {
@@ -18,7 +21,6 @@ public class Console2048 extends Thread implements Observer {
 
     public Console2048(Game game) {
         this.game = game;
-
     }
 
 
@@ -46,13 +48,7 @@ public class Console2048 extends Thread implements Observer {
      * Correspond à la fonctionnalité de Contrôleur : écoute les évènements, et déclenche des traitements sur le modèle
      */
     private void listenKeyboardEvents() {
-
         final Object _this = this;
-
-        new Thread() {
-            public void run() {
-
-                synchronized (_this) {
                     boolean end = false;
 
                     while (!end) {
@@ -63,17 +59,31 @@ public class Console2048 extends Thread implements Observer {
                             e.printStackTrace();
                         }
 
-                       if (s.equals("4") || s.equals("8") || s.equals("6") || s.equals("2") ) {
-                           end = true;
-                           game.rnd();
-                       }
+                        switch (s) {
+                            case "z":
+                                end = true;
+                                game.move(Direction.up);
+
+                                break;
+
+                            case "s":
+                                end = true;
+                                game.move(Direction.down);
+                                break;
+
+                            case "q":
+                                end = true;
+                                game.move(Direction.left);
+                                break;
+
+                            case "d":
+                                end = true;
+                                game.move(Direction.right);
+                                break;
+                        }
+
+
                     }
-
-
-                }
-
-            }
-        }.start();
 
 
     }
@@ -84,7 +94,7 @@ public class Console2048 extends Thread implements Observer {
     private void display()  {
 
 
-        System.out.printf("\033[H\033[J"); // permet d'effacer la console (ne fonctionne pas toujours depuis la console de l'IDE)
+        System.out.print("\033[H\033[J"); // permet d'effacer la console (ne fonctionne pas toujours depuis la console de l'IDE)
 
         for (int i = 0; i < game.getSize(); i++) {
             for (int j = 0; j < game.getSize(); j++) {

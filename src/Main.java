@@ -9,35 +9,8 @@ import java.awt.*;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        //mainConsole();
+        mainConsole();
         mainSwing();
-
-        Game game = new Game(4);
-        game.updateCell(new Cell(2), new Point(1,0));
-        game.updateCell(new Cell(4), new Point(3,1));
-        game.updateCell(new Cell(2), new Point(2,2));
-        game.updateCell(new Cell(2), new Point(0,1));
-        game.updateCell(new Cell(2), new Point(1,2));
-        game.updateCell(new Cell(4), new Point(3,3));
-
-        System.out.println(game.getCells().keySet());
-
-        System.out.println(game);
-
-        game.move(Direction.right);
-        System.out.println(game.getCells().keySet());
-        System.out.println(game);
-
-
-
-        System.out.println("taille :                       "+game.getCells().keySet().toArray().length);
-
-        //game.move(Direction.up);
-
-        //System.out.println(game);
-
-
-
 
     }
 
@@ -47,7 +20,6 @@ public class Main {
         game.addObserver(vue);
 
         vue.start();
-
     }
 
     public static void mainSwing() {
